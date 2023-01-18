@@ -1,0 +1,61 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Exchange Order Service API
+paths:
+  /order:
+    get:
+      tags:
+        - Exchange Order Service
+      summary: Retrieve order or security information
+      description: Retrieves order or security information based on the requestType parameter. 
+      parameters:
+        - name: requestType
+          in: query
+          description: The type of information to retrieve. Accepted values are "securities" or "order"
+          required: true
+          type: string
+        - name: orderId
+          in: query
+          description: ID of the order to retrieve. Required when requestType is "order"
+          required: false
+          type: string
+      responses:
+        200:
+          description: Successful retrieval of information
+          schema:
+            type: object
+        500:
+          description: Error retrieving information
+    post:
+      tags:
+        - Exchange Order Service
+      summary: Create or update an order
+      description: Creates or updates an order based on the provided JSON in the request body.
+      parameters:
+        - name: body
+          in: body
+          description: JSON object containing order information
+          required: true
+          schema:
+            type: object
+            properties:
+              orderSide:
+                type: string
+              quantity:
+                type: number
+              price:
+                type: number
+              symbol:
+                type: string
+              orderType:
+                type: string
+              orderStatus:
+                type: string
+              orderId:
+                type: string
+      responses:
+        200:
+          description: Successful creation or update of order
+        500:
+          description: Error creating or updating order
