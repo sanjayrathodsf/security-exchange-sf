@@ -1,3 +1,14 @@
+# Highlevel Solution Design 
+
+- Platform events where used to process the order fullfilment asynchronously. Whenever an Exchange Order is created/updated/deleted a Platform event is inserted, which then invokes the logic of order management. 
+- To match the orders first the Buy orders are sorted in Descending order with highest bid at the first of the list and Sell orders are sorted ascending order.
+- Then based on each security in the list the orders are matched against the open Sell orders and fullfilled based on best price. The logic currently matches the quantity and does not do partial fullfilment, but can be scaled to achieve parital fill orders. Once the order is matched an exchange match order record is created looking upto to the buy and sell orders and price it was filled at and the orders which were filled are marked as Filled and updated.
+- A Batch apex runs every day after market close to look for all the open day orders and are cancelled. 
+- A REST API exposes an endpoint which can be consumed to query an order, the securities and also perform operations like order creation and update.
+- Swagger file for the same has been added to the src file which can be used to consume this API. 
+
+
+
 # Salesforce DX Project: Next Steps
 
 Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
